@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import { SocketProvider } from "./provider/SocketContext";
+import "./App.css";
+import MenuRouterMain from "./pages/MenuRouterMain";
+import Home from "./pages/Home";
+import InventarioMateriaPrima from "./pages/MateriaPrima/Inventario";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <SocketProvider>
+          <MenuRouterMain>
+            <Route path="/home" component={Home} />
+            <Route path="/matariaprima/inventario" component={InventarioMateriaPrima} />
+          </MenuRouterMain>
+        </SocketProvider>
+      </Switch>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

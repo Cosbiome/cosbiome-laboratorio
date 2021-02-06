@@ -3,14 +3,15 @@ import io from "socket.io-client";
 
 export interface IDataReturnSocket {
   socket: SocketIOClient.Socket;
-  online: boolean;
+  online?: boolean;
 }
-
-const token = sessionStorage.getItem("token");
 
 export const useSocket = (serverPath: string): IDataReturnSocket => {
   const socket: SocketIOClient.Socket = useMemo(
-    () => io.connect(serverPath, { query: { token } }),
+    () =>
+      io.connect(serverPath, {
+        query: { token: sessionStorage.getItem("token") },
+      }),
     [serverPath]
   );
   const [online, setOnline] = useState<boolean>(false);

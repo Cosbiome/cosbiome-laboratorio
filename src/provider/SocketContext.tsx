@@ -13,7 +13,7 @@ export const SocketContext = createContext<IDataReturnSocket>({
 });
 
 export const SocketProvider = ({ children }: IPropsProviderSocket) => {
-  const { socket, online } = useSocket("http://localhost:1337");
+  const { socket, online } = useSocket("http://192.168.15.157:1337");
 
   return <SocketContext.Provider value={{ socket, online }}>{children}</SocketContext.Provider>;
 };

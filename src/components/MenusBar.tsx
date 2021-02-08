@@ -14,7 +14,7 @@ import { PostAddOutlined, LocalDrinkOutlined, ListAltOutlined } from "@material-
 import SubMenu from "antd/lib/menu/SubMenu";
 import { Link } from "react-router-dom";
 
-const MenusBar = ({ setCollapsed, collapsed }: any) => {
+const MenusBar = ({ setCollapsed, collapsed, online }: any) => {
   const toggle = () => {
     setCollapsed(!collapsed);
   };
@@ -109,6 +109,13 @@ const MenusBar = ({ setCollapsed, collapsed }: any) => {
           )
         }
       ></Menu.Item>
+      <Menu.Item onClick={toggle} style={{ fontSize: 12 }} key="8">
+        {online ? (
+          <span className="text-success"> Online</span>
+        ) : (
+          <span className="text-danger"> Offline</span>
+        )}
+      </Menu.Item>
     </Menu>
   );
 };

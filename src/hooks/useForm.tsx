@@ -2,9 +2,15 @@ import { ChangeEvent, useState } from "react";
 
 export type ChangeFormFun = ({ target }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 
-export const useForm = <T extends Object>(initState: T): [T, ChangeFormFun] => {
+export const useForm = <T extends Object>(initState: T): [T, ChangeFormFun, () => void] => {
   const [form, setForm] = useState<T>(initState);
   const [cleanState] = useState<T>(initState);
+
+  const handleCleanForm = (): void => {
+    console.log(cleanState);
+
+    setForm(cleanState);
+  };
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = target;
@@ -15,5 +21,5 @@ export const useForm = <T extends Object>(initState: T): [T, ChangeFormFun] => {
     });
   };
 
-  return [form, handleChange];
+  return [form, handleChange, handleCleanForm];
 };

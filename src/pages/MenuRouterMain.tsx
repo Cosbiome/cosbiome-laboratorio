@@ -1,6 +1,7 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useContext, useState } from "react";
 import { Layout } from "antd";
 import MenusBar from "../components/MenusBar";
+import { SocketContext } from "../provider/SocketContext";
 
 const { Sider, Content } = Layout;
 
@@ -13,6 +14,7 @@ const imageLogo =
 
 const MenuRouterMain = ({ children }: IPropsMenuRouterMain) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
+  const { online } = useContext(SocketContext);
 
   return (
     <Layout style={{ height: "100vh" }}>
@@ -26,7 +28,7 @@ const MenuRouterMain = ({ children }: IPropsMenuRouterMain) => {
         >
           <img src={imageLogo} width="100%" alt="logo cosbiome" />
         </div>
-        <MenusBar setCollapsed={setCollapsed} collapsed={collapsed} />
+        <MenusBar online={online} setCollapsed={setCollapsed} collapsed={collapsed} />
       </Sider>
       <Layout style={{ background: "#fff" }} className="site-layout">
         <Content

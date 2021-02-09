@@ -3,16 +3,17 @@ import AlmacenReplicable from "../../components/AlmacenReplicable";
 import categorias from "../../json/materiaCategorias.json";
 const { Title } = Typography;
 export interface IDataMateriaPrima {
-  caducidad: string;
-  clasificacion: string;
-  createdAt: string;
-  id: string;
   nombre: string;
+  clasificacion: string;
+  caducidad: string;
+  cantidad: number;
+  precio: number;
+  factura: string;
+  id: string;
+  createdAt: string;
   published_at: string;
   updatedAt: string;
   _id: string;
-  cantidad: number;
-  precio: number;
   __v: number;
   key?: string;
 }

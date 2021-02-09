@@ -47,7 +47,7 @@ const MenusBar = ({ setCollapsed, collapsed, online }: any) => {
             key="sub1materia1"
             icon={<PostAddOutlined style={{ fontSize: 20 }} />}
           >
-            CREAR
+            <Link to="/matariaprima/creacion">CREAR</Link>
           </Menu.Item>
 
           <Menu.Item
@@ -69,7 +69,7 @@ const MenusBar = ({ setCollapsed, collapsed, online }: any) => {
             key="sub1envases1"
             icon={<PostAddOutlined style={{ fontSize: 20 }} />}
           >
-            CREAR
+            <Link to="/envases/creacion">CREAR</Link>
           </Menu.Item>
 
           <Menu.Item

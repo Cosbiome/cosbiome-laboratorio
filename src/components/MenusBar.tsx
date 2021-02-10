@@ -8,6 +8,7 @@ import {
   BarChartOutlined,
   ExperimentOutlined,
   DollarCircleOutlined,
+  RestOutlined,
 } from "@ant-design/icons";
 
 import { PostAddOutlined, LocalDrinkOutlined, ListAltOutlined } from "@material-ui/icons/";
@@ -77,7 +78,29 @@ const MenusBar = ({ setCollapsed, collapsed, online }: any) => {
             key="sub1envases2"
             icon={<ListAltOutlined style={{ fontSize: 20 }} />}
           >
-            INVENTARIO
+            <Link to="/envases/inventario">INVENTARIO</Link>
+          </Menu.Item>
+        </SubMenu>
+        <SubMenu
+          key="sub1productos"
+          icon={<RestOutlined style={{ fontSize: 19 }} />}
+          style={{ fontSize: 12 }}
+          title="PRODUCTOS"
+        >
+          <Menu.Item
+            style={{ fontSize: 14 }}
+            key="sub1productos1"
+            icon={<PostAddOutlined style={{ fontSize: 20 }} />}
+          >
+            <Link to="/productos/creacion">CREAR</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            style={{ fontSize: 14 }}
+            key="sub1productos2"
+            icon={<ListAltOutlined style={{ fontSize: 20 }} />}
+          >
+            <Link to="/productos/inventario">INVENTARIO</Link>
           </Menu.Item>
         </SubMenu>
 

@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import InventarioMateriaPrima from "./pages/MateriaPrima/Inventario";
 import CreacionMateriaPrima from "./pages/MateriaPrima/CreacionMateriaPrima";
 import CreacionEnvases from "./pages/Envases/CreacionEnvases";
+import InventarioEnvases from "./pages/Envases/InventarioEnvases";
+import CreacionProductos from "./pages/Productos/CreacionProductos";
 
 const App = () => {
   return (
@@ -19,6 +21,9 @@ const App = () => {
             <Route path="/matariaprima/inventario" component={InventarioMateriaPrima} />
             <Route path="/matariaprima/creacion" component={CreacionMateriaPrima} />
             <Route path="/envases/creacion" component={CreacionEnvases} />
+            <Route path="/envases/inventario" component={InventarioEnvases} />
+            <Route path="/productos/creacion" component={CreacionProductos} />
+            <Route path="/productos/inventario" component={InventarioEnvases} />
           </MenuRouterMain>
         </SocketProvider>
       </Switch>

@@ -1,19 +1,25 @@
 import { Button, Modal, Select, Space, Table } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { http } from "../libs/http";
-import { IDataMateriaPrima, IDataModalFormMercancia } from "../pages/MateriaPrima/Inventario";
-import ModalIngresoMercancia from "./MateriaPrima/ModalIngresoMercancia";
-import moment from "moment";
+import { IDataMateriaPrima } from "../pages/MateriaPrima/Inventario";
 import useFiltersTables from "../hooks/useFiltersTables";
 import { SocketContext } from "../provider/SocketContext";
 import { useForm } from "../hooks/useForm";
 import { SelectValue } from "antd/lib/select";
+import FormReplicableJson from "./FormReplicableJson";
+import { handleParseInput } from "../utils/Parses";
 const { Option } = Select;
 
 interface IPropsAlmacenReplicable {
   tablaPeticiones: string;
   tablaSocket: string;
-  clasificaciones: string[];
+  clasificaciones: { value: string; nombre: string }[];
+}
+
+interface IDataFormEnvaseSurtir {
+  cantidad: 0;
+  precio: 0.0;
+  factura: "";
 }
 interface IColumsProps {
   key: string;
@@ -65,6 +71,7 @@ const AlmacenReplicableSinCaducidad = ({
     {
       key: "clasificacion",
       title: "CLASIFICACION",
+      ...dropMenuFilter("clasificacion"),
       render: (record: TypeStateInterfaces) => {
         return (
           <>
@@ -75,7 +82,7 @@ const AlmacenReplicableSinCaducidad = ({
             >
               {clasificaciones.length > 0 &&
                 clasificaciones.map((clasi) => {
-                  return <Option value={clasi}> {clasi.toUpperCase()} </Option>;
+                  return <Option value={clasi.value}> {clasi.nombre.toUpperCase()} </Option>;
                 })}
             </Select>
           </>
@@ -110,15 +117,11 @@ const AlmacenReplicableSinCaducidad = ({
   }, []);
 
   const { socket } = useContext(SocketContext);
-  const [
-    formModalIngreso,
-    setTormModalIngreso,
-    resetFormModalIngreso,
-  ] = useForm<IDataModalFormMercancia>({
-    caducidad: "",
-    cantidad: 0.0,
-    factura: "",
+
+  const [formEnvaseSur, formChange, resetForm] = useForm<IDataFormEnvaseSurtir>({
+    cantidad: 0,
     precio: 0.0,
+    factura: "",
   });
 
   const handleFormatForTable = (arr: TypeStateInterfaces[]) => {
@@ -148,7 +151,7 @@ const AlmacenReplicableSinCaducidad = ({
   const handleCancel = () => {
     setIsModalVisible(false);
     setIdMateriaSurtir("");
-    resetFormModalIngreso();
+    resetForm();
   };
 
   const handleChangeCategoria = async (e: SelectValue, record: TypeStateInterfaces) => {
@@ -161,14 +164,19 @@ const AlmacenReplicableSinCaducidad = ({
     try {
       e.preventDefault();
 
-      formModalIngreso.caducidad = moment(formModalIngreso.caducidad).format("L");
-
-      await http.update(`${tablaPeticiones}/${idMateriaSurtir}`, formModalIngreso);
+      await http.update(`${tablaPeticiones}/${idMateriaSurtir}`, formEnvaseSur);
 
       handleOk();
-      resetFormModalIngreso();
+      resetForm();
     } catch (error) {}
   };
+
+  const keys = Object.keys(formEnvaseSur);
+  const requireds = [true, true, true];
+  const types = ["in", "in", "i"];
+  const options = [[], [], []];
+
+  const inputs = handleParseInput(keys, requireds, types, options);
 
   return (
     <>
@@ -184,10 +192,12 @@ const AlmacenReplicableSinCaducidad = ({
         visible={isModalVisible}
         onCancel={handleCancel}
       >
-        <ModalIngresoMercancia
-          form={formModalIngreso}
-          onSubmit={handleSubmitMateriaPrima}
-          onChange={setTormModalIngreso}
+        <FormReplicableJson
+          form={formEnvaseSur}
+          onChange={formChange}
+          handleSubmit={handleSubmitMateriaPrima}
+          inputsForm={inputs}
+          textoBoton="Surtir envase"
         />
       </Modal>
     </>

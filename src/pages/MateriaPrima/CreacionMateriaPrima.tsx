@@ -5,6 +5,7 @@ import { useForm } from "../../hooks/useForm";
 import { handleParseInput } from "../../utils/Parses";
 import opciones from "../../json/materiaCategorias.json";
 import { http } from "../../libs/http";
+import moment from "moment";
 
 const { Title } = Typography;
 
@@ -31,6 +32,11 @@ const CreacionMateriaPrima = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
+
+      if (formMateriaCreate.caducidad !== "") {
+        formMateriaCreate.caducidad = moment(formMateriaCreate.caducidad).format("L");
+      }
+
       await http.post("materiasprimas", formMateriaCreate);
       resetForm();
     } catch (error) {}
@@ -52,6 +58,7 @@ const CreacionMateriaPrima = () => {
         onChange={formChange}
         handleSubmit={handleSubmit}
         inputsForm={inputs}
+        textoBoton="Surtir materia prima"
       />
     </div>
   );

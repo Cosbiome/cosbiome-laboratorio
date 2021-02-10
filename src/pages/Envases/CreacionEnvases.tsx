@@ -3,7 +3,7 @@ import { Typography } from "antd";
 import FormReplicableJson from "../../components/FormReplicableJson";
 import { useForm } from "../../hooks/useForm";
 import { handleParseInput } from "../../utils/Parses";
-import opciones from "../../json/materiaCategorias.json";
+import opciones from "../../json/envasesCategorias.json";
 import { http } from "../../libs/http";
 
 const { Title } = Typography;
@@ -21,7 +21,7 @@ const CreacionEnvases = () => {
   const [formEnvaseCreate, formChange, resetForm] = useForm<IDataFormEnvase>({
     nombre: "",
     clasificacion: "",
-    cantidad: 0.0,
+    cantidad: 0,
     precio: 0.0,
     factura: "",
   });
@@ -29,15 +29,22 @@ const CreacionEnvases = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      await http.post("materiasprimas", formEnvaseCreate);
+      await http.post("envases", formEnvaseCreate);
       resetForm();
     } catch (error) {}
   };
 
+  const defaultOption: { value: string; nombre: string }[] = [{ nombre: "", value: "" }];
   const keys = Object.keys(formEnvaseCreate);
   const requireds = [true, true, false, false, false];
   const types = ["i", "s", "in", "in", "i"];
-  const options = [[], opciones, [], [], []];
+  const options: { value: string; nombre: string }[][] = [
+    defaultOption,
+    opciones,
+    defaultOption,
+    defaultOption,
+    defaultOption,
+  ];
 
   const inputs = handleParseInput(keys, requireds, types, options);
 
@@ -50,6 +57,7 @@ const CreacionEnvases = () => {
         onChange={formChange}
         handleSubmit={handleSubmit}
         inputsForm={inputs}
+        textoBoton="Surtir envase"
       />
     </div>
   );

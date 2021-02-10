@@ -15,7 +15,7 @@ const { Option } = Select;
 interface IPropsAlmacenReplicable {
   tablaPeticiones: string;
   tablaSocket: string;
-  clasificaciones: string[];
+  clasificaciones: { value: string; nombre: string }[];
 }
 interface IColumsProps {
   key: string;
@@ -72,6 +72,7 @@ const AlmacenReplicable = ({
     {
       key: "clasificacion",
       title: "CLASIFICACION",
+      ...dropMenuFilter("clasificacion"),
       render: (record: TypeStateInterfaces) => {
         return (
           <>
@@ -82,7 +83,7 @@ const AlmacenReplicable = ({
             >
               {clasificaciones.length > 0 &&
                 clasificaciones.map((clasi) => {
-                  return <Option value={clasi}> {clasi.toUpperCase()} </Option>;
+                  return <Option value={clasi.value}> {clasi.nombre.toUpperCase()} </Option>;
                 })}
             </Select>
           </>
@@ -98,7 +99,13 @@ const AlmacenReplicable = ({
             <Button onClick={() => handleAdd(record.id)} type="primary">
               Agregar
             </Button>
-            <Button type="primary" danger>
+            <Button
+              onClick={() => {
+                handleDelete(record.id);
+              }}
+              type="primary"
+              danger
+            >
               Eliminar
             </Button>
           </Space>
@@ -175,6 +182,10 @@ const AlmacenReplicable = ({
       handleOk();
       resetFormModalIngreso();
     } catch (error) {}
+  };
+
+  const handleDelete = async (id: string) => {
+    await http.delete(`${tablaPeticiones}/${id}`);
   };
 
   return (

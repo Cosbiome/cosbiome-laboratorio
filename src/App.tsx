@@ -9,6 +9,7 @@ import CreacionMateriaPrima from "./pages/MateriaPrima/CreacionMateriaPrima";
 import CreacionEnvases from "./pages/Envases/CreacionEnvases";
 import InventarioEnvases from "./pages/Envases/InventarioEnvases";
 import CreacionProductos from "./pages/Productos/CreacionProductos";
+import InventarioProductos from "./pages/Productos/InventarioProductos";
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
             <Route path="/envases/creacion" component={CreacionEnvases} />
             <Route path="/envases/inventario" component={InventarioEnvases} />
             <Route path="/productos/creacion" component={CreacionProductos} />
-            <Route path="/productos/inventario" component={InventarioEnvases} />
+            <Route path="/productos/inventario" component={InventarioProductos} />
           </MenuRouterMain>
         </SocketProvider>
       </Switch>

@@ -20,6 +20,14 @@ export interface IDataFormPropuctos {
   nombre: string;
   clasificacion: string;
   materiales: IDataMaterial[];
+  precio: number;
+  codigo: string;
+  caducidad: string;
+  creacion: string;
+  precioUnitario: number;
+  lote: number;
+  cantidad: number;
+  sobras: { producto: string; sobra: number; canitdad: string }[];
 }
 
 const CreacionProductos = () => {
@@ -27,6 +35,20 @@ const CreacionProductos = () => {
   useEffect(() => {
     handleGetPorductos();
   }, []);
+
+  const [formMateriaCreate, formChange, resetForm, setForm] = useForm<IDataFormPropuctos>({
+    nombre: "",
+    clasificacion: "",
+    materiales: [],
+    precio: 0,
+    codigo: "",
+    caducidad: "",
+    creacion: moment().format("L"),
+    precioUnitario: 0,
+    lote: 0,
+    cantidad: 0,
+    sobras: [],
+  });
 
   const handleGetPorductos = async () => {
     let insumosDB: { value: string; nombre: string }[] = [];
@@ -37,12 +59,6 @@ const CreacionProductos = () => {
     setInsumos(insumosDB);
   };
 
-  const [formMateriaCreate, formChange, resetForm, setForm] = useForm<IDataFormPropuctos>({
-    nombre: "",
-    clasificacion: "",
-    materiales: [],
-  });
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
@@ -51,16 +67,26 @@ const CreacionProductos = () => {
         formMateriaCreate.caducidad = moment(formMateriaCreate.caducidad).format("L");
       }
 
-      await http.post("materiasprimas", formMateriaCreate);
+      if (formMateriaCreate.materiales.length > 0) {
+        formMateriaCreate.materiales = [];
+      }
+
+      await http.post("productos", formMateriaCreate);
       resetForm();
     } catch (error) {}
   };
 
   const defaultOption: { value: string; nombre: string }[] = [{ nombre: "", value: "" }];
   const keys = Object.keys(formMateriaCreate);
-  const requireds = [true, true, false];
-  const types = ["i", "s", "li"];
-  const options: { value: string; nombre: string }[][] = [defaultOption, opciones, insumos];
+  const requireds = [true, true, true, true, true];
+  const types = ["i", "s", "li", "in", "i"];
+  const options: { value: string; nombre: string }[][] = [
+    defaultOption,
+    opciones,
+    insumos,
+    defaultOption,
+    defaultOption,
+  ];
 
   const inputs = handleParseInput(keys, requireds, types, options);
 

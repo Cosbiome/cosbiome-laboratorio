@@ -1,35 +1,19 @@
-import { Typography } from "antd";
-import { useState } from "react";
+import React, { useState } from "react";
 import AlmacenReplicable, { IColumsProps } from "../../components/AlmacenReplicable";
-import useFiltersTables from "../../hooks/useFiltersTables";
+import { Typography } from "antd";
 import categorias from "../../json/materiaCategorias.json";
+import useFiltersTables from "../../hooks/useFiltersTables";
 const { Title } = Typography;
-export interface IDataMateriaPrima {
-  nombre: string;
-  clasificacion: string;
-  caducidad: string;
-  cantidad: number;
-  precio: number;
-  factura: string;
-  id: string;
-  createdAt: string;
-  published_at: string;
-  updatedAt: string;
-  _id: string;
-  __v: number;
-  key?: string;
-}
 
-export interface IDataModalFormMercancia {
-  cantidad: number;
-  caducidad: string;
-  precio: number;
-  factura: string;
-}
-
-const InventarioMateriaPrima = () => {
+const InventarioProductos = () => {
   const dropMenuFilter = useFiltersTables();
   const [table] = useState<IColumsProps[]>([
+    {
+      dataIndex: "codigo",
+      key: "codigo",
+      title: "CODIGO",
+      ...dropMenuFilter("codigo"),
+    },
     {
       dataIndex: "nombre",
       key: "nombre",
@@ -47,24 +31,30 @@ const InventarioMateriaPrima = () => {
       title: "PRECIO",
     },
     {
+      dataIndex: "precioUnitario",
+      key: "precioUnitario",
+      title: "PRECIO UNITARIO",
+    },
+    {
       dataIndex: "caducidad",
       key: "caducidad",
       title: "CADUCIDAD",
     },
   ]);
+
   return (
     <div className="container">
-      <Title className="text-center">INVENTARIO DE MATERIA PRIMA</Title>
+      <Title className="text-center">INVENTARIO DE PRODUCTOS</Title>
 
       <AlmacenReplicable
-        tablaPeticiones="materiasprimas"
-        tablaSocket="updateMateriaPrima"
+        tablaPeticiones="productos"
+        tablaSocket="productos"
         clasificaciones={categorias}
         addColums={table}
-        calculator={false}
+        calculator={true}
       />
     </div>
   );
 };
 
-export default InventarioMateriaPrima;
+export default InventarioProductos;

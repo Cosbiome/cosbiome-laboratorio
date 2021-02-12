@@ -22,15 +22,12 @@ export const useSocket = (serverPath: string): IDataReturnSocket => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("aaa");
-
       setOnline(true);
     });
   }, [socket]);
 
   useEffect(() => {
     socket.on("disconnect", () => {
-      console.log("bbb");
       setOnline(false);
     });
   }, [socket]);

@@ -17,8 +17,6 @@ interface IPorpsFromReplicableJson {
   setForm?: React.Dispatch<React.SetStateAction<any>>;
 }
 
-// ["i", "s", "d", "in", "in", "i"];
-
 const FormReplicableJson = ({
   inputsForm,
   handleSubmit,
@@ -64,17 +62,30 @@ const FormReplicableJson = ({
     e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>,
     i: number
   ) => {
-    console.log(e);
-    console.log(i);
     let materiales: any[] = form["materiales"];
 
-    materiales[i] = { ...materiales[i], cantidad: parseInt(e.target.value) };
+    materiales[i] = { ...materiales[i], cantidad: parseFloat(e.target.value) };
     if (setForm) {
       console.log(form);
       setForm({
         ...form,
         materiales: materiales,
       });
+    }
+  };
+
+  const handleDelteMultiForm = (remove: any, name: any, i: number) => {
+    let materiales: any[] = form["materiales"];
+
+    materiales = materiales.filter((a) => a !== materiales[i]);
+
+    if (setForm) {
+      console.log(form);
+      setForm({
+        ...form,
+        materiales: materiales,
+      });
+      remove(name);
     }
   };
 
@@ -97,7 +108,6 @@ const FormReplicableJson = ({
                 );
 
               case "s":
-                console.log(form[a.key]);
                 return (
                   <Form.Item key={`${i} - ${a.key}`} label={a.key.toUpperCase()}>
                     <select
@@ -148,7 +158,7 @@ const FormReplicableJson = ({
                 );
               case "li":
                 return (
-                  <Form.List name="prueba">
+                  <Form.List key={i + "milto"} name="prueba">
                     {(fileds: any[], { add, remove }: any) => (
                       <div>
                         {fileds.map((field, i) => (
@@ -158,6 +168,7 @@ const FormReplicableJson = ({
                             align="baseline"
                           >
                             <Form.Item
+                              label="MATERIA PRIMA"
                               {...field}
                               name={[field.name, "first"]}
                               fieldKey={[field.fieldKey, "first"]}
@@ -166,13 +177,11 @@ const FormReplicableJson = ({
                               <select
                                 value={form["materiales"][i].materia}
                                 style={{ width: 300 }}
+                                required={a.redired}
                                 className="form-select"
                                 onChange={(e) => handleChangeMateria(e, i)}
                               >
                                 <option value=""></option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
                                 {a.options.length > 0 &&
                                   a.options.map((opt) => {
                                     return (
@@ -184,6 +193,7 @@ const FormReplicableJson = ({
                               </select>
                             </Form.Item>
                             <Form.Item
+                              label="CANTIDAD"
                               {...field}
                               name={[field.name, "second"]}
                               fieldKey={[field.fieldKey, "first"]}
@@ -193,11 +203,16 @@ const FormReplicableJson = ({
                                 value={form["materiales"][i].cantidad}
                                 style={{ width: 200, height: 38 }}
                                 type="number"
-                                placeholder="Second Name"
+                                required={a.redired}
+                                placeholder="Cantidad"
                                 onChange={(e) => handleChangeCantidad(e, i)}
                               />
                             </Form.Item>
-                            <MinusCircleOutlined onClick={() => remove(field.name)} />
+                            <Form.Item label="ELIMINAR CAMPO">
+                              <MinusCircleOutlined
+                                onClick={() => handleDelteMultiForm(remove, field.name, i)}
+                              />
+                            </Form.Item>
                           </Space>
                         ))}
                         <Form.Item>

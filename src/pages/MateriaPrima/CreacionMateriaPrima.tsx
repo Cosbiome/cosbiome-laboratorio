@@ -59,6 +59,7 @@ const CreacionMateriaPrima = () => {
         handleSubmit={handleSubmit}
         inputsForm={inputs}
         textoBoton="Surtir materia prima"
+        multiParamName="material"
       />
     </div>
   );

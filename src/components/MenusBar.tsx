@@ -9,8 +9,8 @@ import {
   ExperimentOutlined,
   DollarCircleOutlined,
   RestOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
-
 import { PostAddOutlined, LocalDrinkOutlined, ListAltOutlined } from "@material-ui/icons/";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { Link } from "react-router-dom";
@@ -29,13 +29,26 @@ const MenusBar = ({ setCollapsed, collapsed, online }: any) => {
       >
         <Link to="/home">INICIO</Link>
       </Menu.Item>
-      <Menu.Item
-        style={{ fontSize: 14 }}
-        key="2"
-        icon={<PostAddOutlined style={{ fontSize: 20 }} />}
+      <SubMenu
+        key="sub0"
+        icon={<ShoppingCartOutlined style={{ fontSize: 17 }} />}
+        title="INVENTARIOS"
       >
-        CREAR PRODUCTO
-      </Menu.Item>
+        <Menu.Item
+          style={{ fontSize: 14 }}
+          key="sub00"
+          icon={<PostAddOutlined style={{ fontSize: 20 }} />}
+        >
+          <Link to="/requisiciones">CREAR REQUISICIONES</Link>
+        </Menu.Item>
+        <Menu.Item
+          style={{ fontSize: 14 }}
+          key="sub01"
+          icon={<ListAltOutlined style={{ fontSize: 20 }} />}
+        >
+          <Link to="/requisiciones/pendientes">REQUISICIONES PENDIENTES</Link>
+        </Menu.Item>
+      </SubMenu>
       <SubMenu key="sub1" icon={<DatabaseOutlined style={{ fontSize: 17 }} />} title="INVENTARIOS">
         <SubMenu
           key="sub1materia"
@@ -109,7 +122,7 @@ const MenusBar = ({ setCollapsed, collapsed, online }: any) => {
           key="sb13"
           icon={<DollarCircleOutlined style={{ fontSize: 14 }} />}
         >
-          PRODUCTO TERMINADO
+          <Link to="/ProductoTerminado">PRODUCTO TERMINADO</Link>
         </Menu.Item>
       </SubMenu>
 

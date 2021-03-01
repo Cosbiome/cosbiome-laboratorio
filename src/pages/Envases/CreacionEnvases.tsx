@@ -58,6 +58,7 @@ const CreacionEnvases = () => {
         handleSubmit={handleSubmit}
         inputsForm={inputs}
         textoBoton="Surtir envase"
+        multiParamName="material"
       />
     </div>
   );

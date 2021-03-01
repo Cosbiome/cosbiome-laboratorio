@@ -1,7 +1,9 @@
 import React, { ReactNode, useContext, useState } from "react";
-import { Layout } from "antd";
+import { Layout, Space } from "antd";
 import MenusBar from "../components/MenusBar";
 import { SocketContext } from "../provider/SocketContext";
+import { ArrowLeftOutlined, ArrowRightOutlined, RedoOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 
 const { Sider, Content } = Layout;
 
@@ -15,6 +17,8 @@ const imageLogo =
 const MenuRouterMain = ({ children }: IPropsMenuRouterMain) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const { online } = useContext(SocketContext);
+
+  const history = useHistory();
 
   return (
     <Layout style={{ height: "100vh" }}>
@@ -37,8 +41,30 @@ const MenuRouterMain = ({ children }: IPropsMenuRouterMain) => {
             minHeight: 280,
             maxHeight: "100vh",
             overflow: "auto",
+            position: "relative",
           }}
         >
+          <div
+            style={{
+              marginLeft: 20,
+            }}
+            className="row mt-3 ml-2"
+          >
+            <Space>
+              <ArrowLeftOutlined
+                onClick={() => history.goBack()}
+                style={{ fontSize: 25, cursor: "pointer" }}
+              />
+              <ArrowRightOutlined
+                onClick={() => history.goForward()}
+                style={{ fontSize: 25, cursor: "pointer" }}
+              />
+              <RedoOutlined
+                onClick={() => history.go(0)}
+                style={{ fontSize: 25, cursor: "pointer" }}
+              />
+            </Space>
+          </div>
           {children}
         </Content>
       </Layout>

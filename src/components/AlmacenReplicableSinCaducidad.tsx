@@ -198,6 +198,7 @@ const AlmacenReplicableSinCaducidad = ({
           handleSubmit={handleSubmitMateriaPrima}
           inputsForm={inputs}
           textoBoton="Surtir envase"
+          multiParamName="material"
         />
       </Modal>
     </>

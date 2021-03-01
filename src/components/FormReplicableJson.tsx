@@ -15,6 +15,8 @@ interface IPorpsFromReplicableJson {
   form: { [key: string]: any };
   textoBoton: string;
   setForm?: React.Dispatch<React.SetStateAction<any>>;
+  multiParamName: string;
+  labelMultiForm?: string;
 }
 
 const FormReplicableJson = ({
@@ -24,16 +26,17 @@ const FormReplicableJson = ({
   form,
   textoBoton,
   setForm,
+  multiParamName,
+  labelMultiForm,
 }: IPorpsFromReplicableJson) => {
   const handleAddCampoInForm = (add: any) => {
-    const materiales: any[] = form["materiales"];
+    const materiales: any[] = form[multiParamName];
 
     materiales.push({ materia: "", cantidad: 0 });
     if (setForm) {
-      console.log(form);
       setForm({
         ...form,
-        materiales: materiales,
+        [multiParamName]: materiales,
       });
     }
 
@@ -44,16 +47,13 @@ const FormReplicableJson = ({
     e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>,
     i: number
   ) => {
-    console.log(e);
-    console.log(i);
-    let materiales: any[] = form["materiales"];
+    let materiales: any[] = form[multiParamName];
 
     materiales[i] = { ...materiales[i], materia: e.target.value };
     if (setForm) {
-      console.log(form);
       setForm({
         ...form,
-        materiales: materiales,
+        [multiParamName]: materiales,
       });
     }
   };
@@ -62,28 +62,26 @@ const FormReplicableJson = ({
     e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>,
     i: number
   ) => {
-    let materiales: any[] = form["materiales"];
+    let materiales: any[] = form[multiParamName];
 
     materiales[i] = { ...materiales[i], cantidad: parseFloat(e.target.value) };
     if (setForm) {
-      console.log(form);
       setForm({
         ...form,
-        materiales: materiales,
+        [multiParamName]: materiales,
       });
     }
   };
 
   const handleDelteMultiForm = (remove: any, name: any, i: number) => {
-    let materiales: any[] = form["materiales"];
+    let materiales: any[] = form[multiParamName];
 
     materiales = materiales.filter((a) => a !== materiales[i]);
 
     if (setForm) {
-      console.log(form);
       setForm({
         ...form,
-        materiales: materiales,
+        [multiParamName]: materiales,
       });
       remove(name);
     }
@@ -168,14 +166,14 @@ const FormReplicableJson = ({
                             align="baseline"
                           >
                             <Form.Item
-                              label="MATERIA PRIMA"
+                              label={labelMultiForm ? labelMultiForm : "MATERIA PRIMA"}
                               {...field}
                               name={[field.name, "first"]}
                               fieldKey={[field.fieldKey, "first"]}
                               rules={[{ required: true, message: "Missing first name" }]}
                             >
                               <select
-                                value={form["materiales"][i].materia}
+                                value={form[multiParamName][i].materia}
                                 style={{ width: 300 }}
                                 required={a.redired}
                                 className="form-select"
@@ -200,7 +198,7 @@ const FormReplicableJson = ({
                               rules={[{ required: true, message: "Missing first name" }]}
                             >
                               <Input
-                                value={form["materiales"][i].cantidad}
+                                value={form[multiParamName][i].cantidad}
                                 style={{ width: 200, height: 38 }}
                                 type="number"
                                 required={a.redired}

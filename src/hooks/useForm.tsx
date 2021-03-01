@@ -9,8 +9,6 @@ export const useForm = <T extends Object>(
   const [cleanState] = useState<T>(initState);
 
   const handleCleanForm = (): void => {
-    console.log(cleanState);
-
     setForm(cleanState);
   };
 

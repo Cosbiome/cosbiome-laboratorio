@@ -8,6 +8,7 @@ import { http } from "../../libs/http";
 import moment from "moment";
 import { IDataEnvases } from "../Envases/InventarioEnvases";
 import { IDataMateriaPrima } from "../MateriaPrima/Inventario";
+import { useHistory } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -36,6 +37,9 @@ const CreacionProductos = () => {
     handleGetPorductos();
   }, []);
 
+  const history = useHistory();
+
+  // eslint-disable-next-line
   const [formMateriaCreate, formChange, resetForm, setForm] = useForm<IDataFormPropuctos>({
     nombre: "",
     clasificacion: "",
@@ -72,7 +76,7 @@ const CreacionProductos = () => {
       }
 
       await http.post("productos", formMateriaCreate);
-      resetForm();
+      history.go(0);
     } catch (error) {}
   };
 
@@ -101,6 +105,7 @@ const CreacionProductos = () => {
         inputsForm={inputs}
         textoBoton="Surtir materia prima"
         setForm={setForm}
+        multiParamName="materiales"
       />
     </div>
   );

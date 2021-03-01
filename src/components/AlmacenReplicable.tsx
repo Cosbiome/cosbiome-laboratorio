@@ -188,6 +188,7 @@ const AlmacenReplicable = ({
 
       formModalIngreso.caducidad = moment(formModalIngreso.caducidad).format("L");
 
+      await http.post(`ingresosfacturas`, formModalIngreso);
       await http.update(`${tablaPeticiones}/${idMateriaSurtir}`, formModalIngreso);
 
       handleOk();
@@ -219,36 +220,38 @@ const AlmacenReplicable = ({
           onChange={setTormModalIngreso}
         />
       </Modal>
-      <Modal
-        okButtonProps={{ disabled: true, hidden: true }}
-        cancelButtonProps={{ disabled: true, hidden: true }}
-        width={1000}
-        visible={isModalVisibleDetalle}
-        onCancel={handleCancelDetalle}
-      >
-        <table className="table table-hover text-center">
-          <thead>
-            <tr>
-              <th scope="col">MATERIA</th>
-              <th scope="col">CANTIDAD NECESARIA</th>
-              <th scope="col">SOBRA</th>
-            </tr>
-          </thead>
-          <tbody>
-            {materiaPrima
-              .filter((a) => a.id === idMateriaSurtir)[0]
-              ?.sobras.map((a: any) => {
-                return (
-                  <tr>
-                    <td> {a.producto} </td>
-                    <td> {a.canitdad} GR / PZA </td>
-                    <td> {a.sobra} GR / PZA </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-      </Modal>
+      {calculator && (
+        <Modal
+          okButtonProps={{ disabled: true, hidden: true }}
+          cancelButtonProps={{ disabled: true, hidden: true }}
+          width={1000}
+          visible={isModalVisibleDetalle}
+          onCancel={handleCancelDetalle}
+        >
+          <table className="table table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col">MATERIA</th>
+                <th scope="col">CANTIDAD NECESARIA</th>
+                <th scope="col">SOBRA</th>
+              </tr>
+            </thead>
+            <tbody>
+              {materiaPrima
+                .filter((a) => a.id === idMateriaSurtir)[0]
+                ?.sobras.map((a: any) => {
+                  return (
+                    <tr>
+                      <td> {a.producto} </td>
+                      <td> {a.canitdad} GR / PZA </td>
+                      <td> {a.sobra} GR / PZA </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </Modal>
+      )}
     </>
   );
 };

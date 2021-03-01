@@ -10,6 +10,10 @@ import CreacionEnvases from "./pages/Envases/CreacionEnvases";
 import InventarioEnvases from "./pages/Envases/InventarioEnvases";
 import CreacionProductos from "./pages/Productos/CreacionProductos";
 import InventarioProductos from "./pages/Productos/InventarioProductos";
+import Requisiciones from "./pages/Requisiciones";
+import Pendientes from "./pages/Requisiciones/Pendientes";
+import DetalleRequiscion from "./pages/Requisiciones/DetalleRequiscion";
+import ProductoTerminado from "./pages/ProductoTerminado";
 
 const App = () => {
   return (
@@ -25,6 +29,10 @@ const App = () => {
             <Route path="/envases/inventario" component={InventarioEnvases} />
             <Route path="/productos/creacion" component={CreacionProductos} />
             <Route path="/productos/inventario" component={InventarioProductos} />
+            <Route exact path="/requisiciones" component={Requisiciones} />
+            <Route exact path="/requisiciones/pendientes" component={Pendientes} />
+            <Route exact path="/requisiciones/pendientes/:id" component={DetalleRequiscion} />
+            <Route exact path="/productoTerminado" component={ProductoTerminado} />
           </MenuRouterMain>
         </SocketProvider>
       </Switch>

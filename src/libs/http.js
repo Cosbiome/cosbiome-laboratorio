@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const endpointserver = "https://cosbiome.online/";
-const endpointserver = "http://192.168.15.157:3001/";
+const endpointserver = "http://localhost:3001/";
 
 class Http {
   // static instance = new Http();

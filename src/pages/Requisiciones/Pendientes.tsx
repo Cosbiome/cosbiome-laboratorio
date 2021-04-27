@@ -12,6 +12,7 @@ const Pendientes = () => {
 
   useEffect(() => {
     handleGetRequisiciones();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {}, [materiasPrimas, materiasPrimas]);

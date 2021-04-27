@@ -12,7 +12,7 @@ export const calculaProduccionProducto = async (productos: any[]): Promise<any[]
 
   let final: any[] = productos.map((a) => {
     let cantidadesDisponibles: number[] = [];
-    let sobras: { producto: string; sobra: number; canitdad: string }[] = [];
+    let sobras: { producto: string; sobra: number; canitdad: string; precio: number }[] = [];
     let precioUnitario: number = 0;
 
     // PRODUCTOS QUE SE PUEDEN CREAR
@@ -33,9 +33,19 @@ export const calculaProduccionProducto = async (productos: any[]): Promise<any[]
       precioUnitario += materiaP.precio;
 
       if (sobra > 0) {
-        sobras.push({ producto: materiaP.nombre, sobra: sobra, canitdad: material.cantidad });
+        sobras.push({
+          producto: materiaP.nombre,
+          sobra: sobra,
+          canitdad: material.cantidad,
+          precio: materiaP.precio,
+        });
       } else {
-        sobras.push({ producto: materiaP.nombre, sobra: sobra, canitdad: material.cantidad });
+        sobras.push({
+          producto: materiaP.nombre,
+          sobra: sobra,
+          canitdad: material.cantidad,
+          precio: materiaP.precio,
+        });
       }
     });
 

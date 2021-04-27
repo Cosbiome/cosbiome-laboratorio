@@ -131,10 +131,6 @@ const CardForRequest = ({
     let falta = final.diff(actual, "minutes");
     let diferencial = entrega - falta;
 
-    console.log(diferencial);
-    console.log(entrega);
-    console.log(falta);
-
     setProgressLine((diferencial * 100) / entrega);
   };
 

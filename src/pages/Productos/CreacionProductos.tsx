@@ -71,10 +71,6 @@ const CreacionProductos = () => {
         formMateriaCreate.caducidad = moment(formMateriaCreate.caducidad).format("L");
       }
 
-      if (formMateriaCreate.materiales.length > 0) {
-        formMateriaCreate.materiales = [];
-      }
-
       await http.post("productos", formMateriaCreate);
       history.go(0);
     } catch (error) {}

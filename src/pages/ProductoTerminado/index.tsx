@@ -43,6 +43,7 @@ const ProductoTerminado = () => {
 
   useEffect(() => {
     handleGetProductos();
+    // eslint-disable-next-line
   }, []);
 
   const handleGetProductos = async () => {

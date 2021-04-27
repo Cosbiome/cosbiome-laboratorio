@@ -234,6 +234,7 @@ const AlmacenReplicable = ({
                 <th scope="col">MATERIA</th>
                 <th scope="col">CANTIDAD NECESARIA</th>
                 <th scope="col">SOBRA</th>
+                <th scope="col">PRECIO</th>
               </tr>
             </thead>
             <tbody>
@@ -245,6 +246,7 @@ const AlmacenReplicable = ({
                       <td> {a.producto} </td>
                       <td> {a.canitdad} GR / PZA </td>
                       <td> {a.sobra} GR / PZA </td>
+                      <td> {a.precio} $</td>
                     </tr>
                   );
                 })}
